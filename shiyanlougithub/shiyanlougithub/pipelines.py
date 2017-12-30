@@ -11,9 +11,9 @@ from datetime import datetime
 class ShiyanlougithubPipeline(object):
     def process_item(self, item, spider):
         item['update_time'] = datetime.strptime(item['update_time'],'%Y-%m-%dT%H:%M:%SZ')
-        item['commit'] = int
-        item['branches'] =
-        item['releases'] =
+        item['commits'] = int(item['commits'].split(',').join())
+        item['branches'] = int(item['branches'].split(',').join())
+        item['releases'] = int(item['releases'].splite(',').join())
         self.session.add(Repository(**item))
         return item
 
