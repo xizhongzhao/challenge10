@@ -15,7 +15,7 @@ class RepositoriesSpider(scrapy.Spider):
     def parse(self, response):
         for repos in response.css('li.public'):
             item = RepositoryItem({
-                'name':repos.xpath('.//a[@itmprop="name codeRepository"]/text()').re_first('^\s*(\S*)'),
+                'name':repos.xpath('.//a[@itemprop="name codeRepository"]/text()').re_first('^\s*(\S*)'),
                 'update_time':repos.xpath('.//relative-time/@datetime').extract_first()
                 })
             yield item
