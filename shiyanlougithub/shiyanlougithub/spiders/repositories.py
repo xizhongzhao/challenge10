@@ -16,7 +16,7 @@ class RepositoriesSpider(scrapy.Spider):
             item = RepositoryItem()
             item['name'] = repos.xpath('.//a[@itemprop="name codeRepository"]/text()').re_first('^\s*(\S*)'),
             item['update_time'] = repos.xpath('.//relative-time/@datetime').extract_first()
-            repos_url = response.urljoin(repos.xpath('.//h3/a[@itemprop="name codeRepository"]/@href').extract_first())
+            repos_url = response.urljoin(repos.xpath('.//a/@href').extract_first())
             request = scrapy.Request(repos_url,callback=self.parse_repos)
             request.meta['item'] = item
             yield request
