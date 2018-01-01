@@ -24,14 +24,15 @@ class RepositoriesSpider(scrapy.Spider):
     def parse_repos(self,response):
         item = response.meta['item']
         for num in response.css('ul.numbers-summary li'):
-            type_text = num.xpath('.//a/text()').re_first('\s*(.*)\s*')
-            num_text = num.xpath('.//span[@class="num text-emphasized"]/text()').re_first('\s*(.*)\s*')
+            type_text = num.xpath('.//a/text()').re_first('\n\s*(.*)\n')
+            num_text = num.xpath('.//span[@class="num text-emphasized"]/text()').re_first('\n\s*(.*)\n')
             if type_text and num_text:
+                num_text = num_text.replace(',','')
                 if type_text in ('commit','commits'):
-                    item['commits'] = num_text
+                    item['commits'] = int(num_text)
                 elif type_text in ('branch','branches'):
-                    item['brances'] = num_text
+                    item['brances'] = int(num_text)
                 elif type_text in ('release','releases'):
-                    item['releases'] = num_text
+                    item['releases'] = int(num_text)
         yield item
 
