@@ -5,7 +5,6 @@ from shiyanlougithub.items import RepositoryItem
 
 class RepositoriesSpider(scrapy.Spider):
     name = 'repositories'
-    allowed_domains = ['https://github.com']
     
     @property
     def start_urls(self):
@@ -31,7 +30,7 @@ class RepositoriesSpider(scrapy.Spider):
                 if type_text in ('commit','commits'):
                     item['commits'] = int(num_text)
                 elif type_text in ('branch','branches'):
-                    item['brances'] = int(num_text)
+                    item['branches'] = int(num_text)
                 elif type_text in ('release','releases'):
                     item['releases'] = int(num_text)
         yield item
